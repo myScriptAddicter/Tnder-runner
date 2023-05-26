@@ -22,3 +22,112 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+
+
+```javascript
+
+//Define variables
+
+var player = document.getElementById("player");
+
+var obstacle = document.getElementById("obstacle");//Set initial player position
+
+var playerPosition = 0;
+
+player.style.left = playerPosition + "px";
+
+//Function to move player left
+
+function moveLeft() {
+
+  playerPosition -= 10;
+
+  player.style.left = playerPosition +"px";
+
+}
+
+//Function to move player right
+
+function moveRight() {
+
+  playerPosition += 10;
+
+  player.style.left = playerPosition + "px";
+
+}
+
+//Event listener for left arrow key
+
+document.addEventListener("keydown", function(event) {
+
+  if (event.key === "ArrowLeft") {
+
+    moveLeft();
+
+  }
+
+});
+
+//Event listener for right arrow key
+
+document.addEventListener("keydown", function(event) {
+
+  if (event.key === "ArrowRight") {
+
+    moveRight();
+
+  }
+
+});
+
+//Function to generate random obstacle position
+
+function generateObstaclePosition() {
+
+  var obstaclePosition = Math.floor(Math.random() * 500);
+
+  obstacle.style.left = obstaclePosition + "px";
+
+}
+
+//Function to move obstacle downwards
+
+function moveObstacle() {
+
+  var obstacleTop = parseInt(window.getComputedStyle(obstacle).getPropertyValue("top"));
+
+  obstacle.style.top = obstacleTop + 10 + "px";
+
+  
+
+  //Check for collision between player and obstacle
+
+  if (obstacleTop > 450 && obstacleTop < 550 && playerPosition > parseInt(window.getComputedStyle(obstacle).getPropertyValue("left")) - 20 && playerPosition < parseInt(window.getComputedStyle(obstacle).getPropertyValue("left")) + 20) {
+
+    alert("Game Over!");
+
+    clearInterval(intervalId);
+
+  }
+
+}
+
+//Start the game
+
+generateObstaclePosition();
+
+var intervalId = setInterval(function() {
+
+  moveObstacle();
+
+  if (parseInt(window.getComputedStyle(obstacle).getPropertyValue("top")) > 600) {
+
+    generateObstaclePosition();
+
+  }
+
+}, 50);
+
+```
+
